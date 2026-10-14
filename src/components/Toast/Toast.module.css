@@ -1,0 +1,26 @@
+/* 位置可由页面通过 --toast-top 调整（如登录页避开协议勾选行） */
+.toast {
+  position: absolute;
+  z-index: 60;
+  left: 50%;
+  top: var(--toast-top, 46%);
+  transform: translate(-50%, -50%) scale(0.94);
+  max-width: 260px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--toast-bg);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  white-space: pre-line;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}

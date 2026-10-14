@@ -1,0 +1,76 @@
+/* 场景目录（原型入口，不属于 APP 界面） */
+:where(.pg-directory) {
+  min-height: 100vh;
+  padding: 40px 16px 64px;
+  color: var(--text-body);
+
+  .dir-wrap {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .dir-head h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .dir-head p {
+    margin: 8px 0 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #6b6b73;
+  }
+  .dir-section {
+    margin-top: 28px;
+  }
+  .dir-section h2 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .dir-section > p {
+    margin: 0 0 10px;
+    font-size: 12px;
+    color: #8a8a92;
+  }
+  .dir-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+  .dir-card {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e3e4e8;
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .dir-card:hover {
+    border-color: var(--brand-red);
+    box-shadow: 0 4px 14px rgba(20, 20, 30, 0.06);
+  }
+  .dir-card strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .dir-card span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #8a8a92;
+  }
+  .dir-card code {
+    display: block;
+    margin-top: 6px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 11px;
+    color: #a0a2a9;
+    overflow-wrap: anywhere;
+  }
+}

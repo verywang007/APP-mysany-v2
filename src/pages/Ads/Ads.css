@@ -1,0 +1,206 @@
+/* =========================================================
+   个性化广告授权：启动页 + 系统授权弹窗（对照真机截图还原）
+   基于 kit.css 的系统弹窗样式，这里覆盖尺寸与配色。
+   ========================================================= */
+:where(.pg-ads) {
+  .device {
+    background: #c9ccd4;
+  }
+
+  /* ── 启动页背景（天际线 + SANY 挖掘机）───────────────── */
+  .splash {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .splash svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .veil {
+    /* 系统弹窗出现时的整体压暗 / 去色 */
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: rgba(186, 192, 203, 0.26);
+    -webkit-backdrop-filter: saturate(0.55);
+    backdrop-filter: saturate(0.55);
+  }
+
+  /* ── 顶部状态栏（含灵动岛 / 返回 App Store）─────────── */
+  .sbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 6;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 9px 22px 0;
+    color: #0b0b0f;
+  }
+
+  .sbar-l {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .sbar-time {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    line-height: 1.15;
+  }
+
+  .sbar-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .sbar-back svg {
+    width: 8px;
+    height: 11px;
+    fill: #0b0b0f;
+  }
+
+  .sbar-r {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 3px;
+  }
+
+  .sbar-r .sb-signal {
+    width: 17px;
+    height: 11px;
+    fill: #0b0b0f;
+  }
+
+  .sbar-r .sb-wifi {
+    width: 16px;
+    height: 12px;
+    fill: #0b0b0f;
+  }
+
+  .sbar-r .sb-battery {
+    width: 27px;
+    height: 13px;
+  }
+
+  .island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 141px;
+    height: 46px;
+    border-radius: 23px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .island .il-app {
+    width: 29px;
+    height: 29px;
+    border-radius: 8px;
+    background: #f0642e;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  }
+
+  .island .il-app i {
+    display: block;
+    width: 11px;
+    height: 11px;
+    margin: 9px auto 0;
+    background: #fff;
+    opacity: 0.85;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+
+  .island .il-pic {
+    width: 25px;
+    height: 29px;
+    border-radius: 6px;
+    background: linear-gradient(160deg, #6c727e, #3a3e46);
+  }
+
+  /* ── 分页圆点 ─────────────────────────────────────────── */
+  .dots {
+    position: absolute;
+    left: 50%;
+    bottom: 74px;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    gap: 16px;
+  }
+
+  .dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .dots i + i {
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  /* ── 授权弹窗 ─────────────────────────────────────────── */
+  .alert-wrap {
+    background: none;
+    padding-top: 36px;
+  }
+
+  .device .alert {
+    width: 300px;
+    padding: 21px 20px 16px;
+    text-align: left;
+    background: rgba(242, 243, 246, 0.94);
+    border-radius: 26px;
+    box-shadow:
+      0 14px 44px rgba(10, 12, 20, 0.2),
+      0 1px 2px rgba(10, 12, 20, 0.08);
+  }
+
+  .device .alert-t {
+    font-size: 17.5px;
+    line-height: 1.34;
+  }
+
+  .device .alert-m {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #33343a;
+    line-height: 1.42;
+  }
+
+  .device .alert-btns {
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .device .alert-btn {
+    height: 50px;
+    border-radius: 16px;
+    background: #e2e3e7;
+    font-size: 17px;
+  }
+
+  .device .alert-btn:active {
+    background: #d6d7dc;
+  }
+}

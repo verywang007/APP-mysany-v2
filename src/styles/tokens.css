@@ -1,0 +1,39 @@
+/* =========================================================
+   设计变量（全局）
+   ---------------------------------------------------------
+   新写的样式一律使用这里的变量，不要直接写色值。
+   各页面独有的变量定义在页面样式的作用域里（:where(.pg-xxx)）。
+   ========================================================= */
+:root {
+  /* 品牌色 */
+  --brand-red: #e2231a;
+  --brand-red-weak: #eda6aa;
+
+  /* 文本 */
+  --text-strong: #141416;
+  --text-body: #17171c;
+  --text-muted: #98989e;
+  --text-placeholder: #c0c0c4;
+
+  /* 背景 / 分隔 */
+  --bg-desktop: #e9eaee;
+  --bg-field: #f3f4f8;
+  --line-soft: #f0f0f4;
+
+  /* 浮层 */
+  --scrim: rgba(12, 13, 18, 0.42);
+  --toast-bg: rgba(20, 20, 26, 0.86);
+
+  /* 设备外框（基准设备 414 × 896） */
+  --device-w: 414px;
+  --device-h: 896px;
+  --device-radius: 44px;
+  --device-shadow: 0 24px 70px rgba(18, 20, 28, 0.26), 0 2px 8px rgba(18, 20, 28, 0.1);
+
+  /* 动效 */
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'SF Pro SC', 'SF Pro Text', 'PingFang SC', 'Helvetica Neue',
+    'Microsoft YaHei', sans-serif;
+}

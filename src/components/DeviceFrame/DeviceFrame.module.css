@@ -1,0 +1,22 @@
+/* 原型辅助入口：回到场景目录（真机全屏时隐藏） */
+.dirLink {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 15px;
+  background: #fff;
+  border: 1px solid #d9dade;
+  color: #4b4c53;
+  font-size: 12px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(20, 20, 30, 0.06);
+}
+.dirLink:hover {
+  background: #f4f4f7;
+}

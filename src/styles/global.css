@@ -1,0 +1,61 @@
+/* =========================================================
+   全局基础样式：重置 + 设备外框
+   页面样式见 src/pages/<Page>/<Page>.css，统一包在 :where(.pg-xxx) 作用域里。
+   ========================================================= */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+[hidden] {
+  display: none !important;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-desktop);
+  color: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 舞台 + 设备外框 ─────────────────────────────────── */
+.stage {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 28px 16px;
+}
+.device {
+  position: relative;
+  width: var(--device-w);
+  height: var(--device-h);
+  background: #fff;
+  border-radius: var(--device-radius);
+  overflow: hidden;
+  box-shadow: var(--device-shadow);
+}
+
+/* ── 真机全屏：去掉外框，铺满屏幕 ─────────────────────── */
+@media (max-width: 459px), (max-height: 930px) and (pointer: coarse) {
+  .stage {
+    padding: 0;
+    min-height: 100dvh;
+    gap: 0;
+  }
+  .device {
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .proto-only {
+    display: none !important;
+  }
+}
