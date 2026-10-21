@@ -112,7 +112,7 @@ export function Login({ locked = false }: LoginProps = {}) {
       phoneInput.current?.focus();
       return;
     }
-    const c = String(Math.floor(100000 + Math.random() * 900000));
+    const c = '123456';
     setSentCode(c);
     toast('验证码已发送\n演示验证码：' + c, 2600);
     startTimer();
@@ -378,36 +378,6 @@ export function Login({ locked = false }: LoginProps = {}) {
             <input
               className="cb-input"
               type="checkbox"
-              checked={agreeService}
-              disabled={locked}
-              onChange={e => setAgreeService(e.target.checked)}
-            />
-            <span className="cb" aria-hidden="true">
-              <TickIcon />
-            </span>
-            <span className="agree-txt">
-              同意
-              <a
-                href="#"
-                className="doc-link"
-                aria-disabled={locked}
-                onClick={e => {
-                  if (locked) {
-                    e.preventDefault();
-                    lockToast();
-                    return;
-                  }
-                  openDoc(e, 'service');
-                }}
-              >
-                用户服务协议
-              </a>
-            </span>
-          </label>
-          <label className={'agree' + (locked ? ' is-locked' : '')}>
-            <input
-              className="cb-input"
-              type="checkbox"
               checked={agreePrivacy}
               disabled={locked}
               onChange={e => setAgreePrivacy(e.target.checked)}
@@ -416,7 +386,7 @@ export function Login({ locked = false }: LoginProps = {}) {
               <TickIcon />
             </span>
             <span className="agree-txt">
-              同意
+              已阅读并知悉《
               <a
                 href="#"
                 className="doc-link"
@@ -430,8 +400,40 @@ export function Login({ locked = false }: LoginProps = {}) {
                   openDoc(e, 'privacy');
                 }}
               >
-                隐私协议
+                隐私政策
               </a>
+              》
+            </span>
+          </label>
+          <label className={'agree' + (locked ? ' is-locked' : '')}>
+            <input
+              className="cb-input"
+              type="checkbox"
+              checked={agreeService}
+              disabled={locked}
+              onChange={e => setAgreeService(e.target.checked)}
+            />
+            <span className="cb" aria-hidden="true">
+              <TickIcon />
+            </span>
+            <span className="agree-txt">
+              已阅读并同意《
+              <a
+                href="#"
+                className="doc-link"
+                aria-disabled={locked}
+                onClick={e => {
+                  if (locked) {
+                    e.preventDefault();
+                    lockToast();
+                    return;
+                  }
+                  openDoc(e, 'service');
+                }}
+              >
+                用户协议
+              </a>
+              》
             </span>
           </label>
         </div>
