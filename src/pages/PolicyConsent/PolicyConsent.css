@@ -1,0 +1,170 @@
+/* =========================================================
+   协议同意 · 分场景
+   弹窗、勾选、按钮、退出态复用 PrivacyUpdate.css（页面同时带 .pg-privacy）；
+   这里只补启动页、登录页、仅浏览模式条
+   ========================================================= */
+:where(.pg-consent) {
+  /* ── 启动页（首次启动时指引弹窗的背景）── */
+  .pc-splash {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 120px;
+    background: #fff;
+  }
+
+  .pc-logo {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--red);
+  }
+
+  .pc-slogan {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ── 登录页（简化示意）── */
+  .pc-login {
+    position: absolute;
+    inset: 0;
+    padding: 54px 28px 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  .pc-notice {
+    appearance: none;
+    border: 0;
+    margin: 8px -8px 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fff4f3;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #8a3a35;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .pc-notice b {
+    flex: none;
+    font-weight: 600;
+    color: var(--red);
+  }
+
+  .pc-title {
+    margin: 36px 0 28px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .pc-field {
+    height: 52px;
+    margin-bottom: 14px;
+    padding: 0 16px;
+    border-radius: 12px;
+    background: var(--field);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+  }
+
+  .pc-cc {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .pc-ph {
+    flex: 1;
+    color: var(--placeholder);
+  }
+
+  .pc-code {
+    font-size: 14px;
+    color: var(--blue);
+  }
+
+  .pc-submit {
+    flex: none;
+    margin-top: 14px;
+  }
+
+  .pc-agree {
+    padding: 20px 0 0;
+  }
+
+  /* ── 仅浏览模式提示条 ── */
+  .pc-browse {
+    position: absolute;
+    top: 54px;
+    left: 12px;
+    right: 12px;
+    z-index: 5;
+    padding: 10px 10px 10px 14px;
+    border-radius: 12px;
+    background: rgba(20, 20, 28, 0.88);
+    color: #fff;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .pc-browse button {
+    appearance: none;
+    border: 0;
+    flex: none;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 14px;
+    background: var(--red);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ── 退出态：两个按钮纵向排列；底部辅助入口 ── */
+  .exited .btn + .btn {
+    margin-top: -6px;
+  }
+
+  .pc-ex-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+  }
+
+  .pc-ex-links button {
+    appearance: none;
+    border: 0;
+    padding: 0;
+    background: none;
+    font: inherit;
+    color: var(--blue);
+    cursor: pointer;
+  }
+
+  .pc-ex-links i {
+    width: 1px;
+    height: 12px;
+    background: var(--line);
+  }
+}

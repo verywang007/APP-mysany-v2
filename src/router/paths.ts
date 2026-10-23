@@ -6,6 +6,7 @@ export const PATHS = {
   mine: '/mine',
   cancellation: '/account-cancellation',
   privacyUpdate: '/privacy-update',
+  policyConsent: '/policy-consent',
   ads: '/ads',
 } as const;
 

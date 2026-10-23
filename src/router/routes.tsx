@@ -5,6 +5,7 @@ import DirectoryPage from '@/pages/Directory';
 import HomePage from '@/pages/Home';
 import LoginPage from '@/pages/Login';
 import MinePage from '@/pages/Mine';
+import PolicyConsentPage from '@/pages/PolicyConsent';
 import PrivacyUpdatePage from '@/pages/PrivacyUpdate';
 import { PATHS } from './paths';
 
@@ -68,6 +69,14 @@ export const ROUTES: AppRoute[] = [
     entry: '无页面入口：APP 启动时检测到协议版本变更后强制弹出',
     themeColor: '#ffffff',
     element: <PrivacyUpdatePage />,
+  },
+  {
+    path: PATHS.policyConsent,
+    title: '协议同意（分场景）',
+    group: '独立场景',
+    entry: '无页面入口：初次使用 / 老用户已登录 / 老用户登录失效时，按同意记录分别处理（?scenario=）',
+    themeColor: '#ffffff',
+    element: <PolicyConsentPage />,
   },
   {
     path: PATHS.ads,
