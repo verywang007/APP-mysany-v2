@@ -74,7 +74,7 @@ export const ROUTES: AppRoute[] = [
     path: PATHS.policyConsent,
     title: '协议同意（分场景）',
     group: '独立场景',
-    entry: '无页面入口：初次使用 / 老用户已登录 / 老用户登录失效时，按同意记录分别处理（?scenario=）',
+    entry: '无页面入口：老用户已登录 / 老用户登录失效（跳转登录页）时，按同意记录分别处理（?scenario=）',
     themeColor: '#ffffff',
     element: <PolicyConsentPage />,
   },

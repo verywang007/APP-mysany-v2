@@ -11,6 +11,8 @@ import { usePresence } from '@/hooks/usePresence';
 import { useRetrigger } from '@/hooks/useRetrigger';
 import { POLICY_DATE, POLICY_VERSION } from '@/mock/policy';
 import { PATHS } from '@/router/paths';
+import { HomeScreen } from '../Home/HomeScreen';
+import '../Home/Home.css';
 import { FakeHome } from '../PrivacyUpdate/FakeHome';
 import '../PrivacyUpdate/PrivacyUpdate.css';
 import './PolicyConsent.css';
@@ -34,7 +36,6 @@ type SheetKind = 'guide' | 'update' | 'changes';
 type ExitKind = 'first' | 'loggedIn';
 
 const SCENARIOS: ReadonlyArray<{ value: Scenario; label: string }> = [
-  { value: 'first', label: '初次使用（新安装）' },
   { value: 'loggedIn', label: '老用户 · 已登录' },
   { value: 'otherDevice', label: '老用户 · 已登录（其他设备已同意）' },
   { value: 'expired', label: '老用户 · 登录失效需重新登录' },
@@ -126,11 +127,10 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
       setScreen('home');
       toast(`该账号已在其他设备同意 v${POLICY_VERSION}\n直接进入，不再弹出更新提示`, 2200);
     } else {
-      setDeviceVer(OLD_VERSION);
-      setAccountVer(OLD_VERSION);
-      setScreen('login');
+      // 登录失效：直接使用登录页 #/login
+      navigate(PATHS.login);
     }
-  }, [scenario, openSheet, toast, setDeviceVer, setAccountVer]);
+  }, [scenario, openSheet, toast, setDeviceVer, setAccountVer, navigate]);
 
   useEffect(() => {
     launch();
@@ -221,7 +221,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
 
   return (
     <>
-      <StatusBar signal="dots" network="5g" battery={81} />
+      {screen !== 'home' && <StatusBar signal="dots" network="5g" battery={81} />}
 
       {/* ── 背景屏 ── */}
       {screen === 'splash' && (
@@ -231,7 +231,13 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
         </div>
       )}
 
-      {(screen === 'home' || screen === 'browse') && <FakeHome blocked={homeBlocked} />}
+      {/* 更新提示背景：真实首页 #/home */}
+      {screen === 'home' && (
+        <div className="pg-home pc-home" aria-hidden={homeBlocked}>
+          <HomeScreen />
+        </div>
+      )}
+      {screen === 'browse' && <FakeHome blocked={false} />}
 
       {screen === 'browse' && (
         <div className="pc-browse">
@@ -329,7 +335,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
               {sheetKind === 'guide' ? '个人信息保护指引' : sheetKind === 'update' ? '更新提示' : '协议变更说明'}
             </div>
             <div className="up-sub">
-              版本 v{POLICY_VERSION} · {POLICY_DATE} 生效
+              {sheetKind === 'update' ? `${POLICY_DATE} 生效` : `版本 v${POLICY_VERSION} · ${POLICY_DATE} 生效`}
             </div>
           </div>
 
@@ -350,9 +356,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
                 <ol>
                   <li>
                     我们收集的个人信息类型、用途，以及接入的第三方 SDK（见
-                    <a href="#" className="doc-link" onClick={e => openDoc(e, 'share')}>
-                      《个人信息共享清单》
-                    </a>
+                    《个人信息共享清单》
                     ）；
                   </li>
                   <li>设备定位、工况数据等权限仅在您使用相关功能时申请，您可随时关闭；</li>
@@ -370,9 +374,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
                 <ol>
                   <li>
                     更新了《隐私政策》与
-                    <a href="#" className="doc-link" onClick={e => openDoc(e, 'share')}>
-                      《个人信息共享清单》
-                    </a>
+                    《个人信息共享清单》
                     中，第三方 SDK 的名称、收集范围及其隐私政策地址；
                   </li>
                   <li>明确了设备定位信息、工况数据的收集目的、使用范围与存储期限；</li>
@@ -388,6 +390,25 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
           {forced ? (
             <>
               <div className={'agreements' + (shaking ? ' shake' : '')}>
+                {sheetKind === 'update' && (
+                  <label className="agree">
+                    <input
+                      className="cb-input"
+                      type="checkbox"
+                      checked={agreePrivacy}
+                      onChange={e => setAgreePrivacy(e.target.checked)}
+                    />
+                    <span className="cb" aria-hidden="true">
+                      <TickIcon />
+                    </span>
+                    <span className="agree-txt">
+                      已阅读并知悉
+                      <a href="#" className="doc-link" onClick={e => openDoc(e, 'privacy')}>
+                        《隐私政策》
+                      </a>
+                    </span>
+                  </label>
+                )}
                 <label className="agree">
                   <input
                     className="cb-input"
@@ -399,12 +420,13 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
                     <TickIcon />
                   </span>
                   <span className="agree-txt">
-                    同意
+                    {sheetKind === 'update' ? '已阅读并同意' : '同意'}
                     <a href="#" className="doc-link" onClick={e => openDoc(e, 'service')}>
-                      用户服务协议
+                      {sheetKind === 'update' ? '《用户协议》' : '用户服务协议'}
                     </a>
                   </span>
                 </label>
+                {sheetKind !== 'update' && (
                 <label className="agree">
                   <input
                     className="cb-input"
@@ -422,6 +444,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
                     </a>
                   </span>
                 </label>
+                )}
               </div>
               <div className="up-foot">
                 <button className="btn btn-ghost" type="button" onClick={reject}>
@@ -542,7 +565,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
 export default function PolicyConsentPage() {
   const [params, setParams] = useSearchParams();
   const q = params.get('scenario');
-  const scenario: Scenario = isScenario(q) ? q : 'first';
+  const scenario: Scenario = isScenario(q) ? q : 'loggedIn';
   const [launchKey, setLaunchKey] = useState(0);
   const [deviceVer, setDeviceVer] = useState<string | null>(null);
   const [accountVer, setAccountVer] = useState<string | null>(null);
