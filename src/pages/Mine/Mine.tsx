@@ -231,6 +231,26 @@ export function Mine() {
               >
                 相册
               </button>
+              {profile.avatar && (
+                <button
+                  className="as-item"
+                  onClick={() => {
+                    closeSheet();
+                    setDialog({
+                      t: '使用默认头像？',
+                      m: '确认后将恢复系统默认头像。',
+                      cancel: '取消',
+                      ok: '确认',
+                      onOk: () => {
+                        setProfile(p => ({ ...p, avatar: false }));
+                        toast('已使用默认头像');
+                      },
+                    });
+                  }}
+                >
+                  使用默认头像
+                </button>
+              )}
             </div>
             <div className="as-group as-cancel">
               <button className="as-item" onClick={closeSheet}>

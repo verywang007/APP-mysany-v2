@@ -20,6 +20,7 @@ const ROWS_1 = [
 ];
 
 const ROWS_2 = [
+  { k: 'privacySettings', t: '隐私设置', ico: <Ico.gear />, bg: '#EDF3FF', badge: '' },
   { k: 'mall', t: '积分商城', ico: <Ico.shop />, bg: '#FFE8EA', badge: '全面升级' },
   { k: 'self', t: '自助服务', ico: <Ico.self />, bg: '#E9F1FF' },
   { k: 'fav', t: '收藏中心', ico: <Ico.star />, bg: '#FFE7EB' },
@@ -44,7 +45,7 @@ export function MineHome({ stars, week, claimed, onClaim }: MineHomeProps) {
       {/* 顶部账号栏（吸顶） */}
       <div className={'mine-hd' + (stuck ? ' is-stuck' : '')}>
         <div className="hd-avatar" onClick={() => push('profile')}>
-          <Avatar size={40} set={profile.avatar} name={acc.name} />
+          <Avatar size={40} set={profile.avatar} name={acc.name} role={profile.role} />
           <span className="hd-badge">!</span>
         </div>
         <div className="hd-main">

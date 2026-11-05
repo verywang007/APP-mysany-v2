@@ -58,6 +58,7 @@ export type SheetKey = 'account' | 'service' | 'lang' | 'star' | 'avatar' | 'nic
 
 export type ViewKind =
   | 'setting'
+  | 'privacy-settings'
   | 'cookies'
   | 'cookie-detail'
   | 'help'
@@ -99,6 +100,7 @@ export const SUBS = {
   delivery: { k: 'empty', t: '主机交付', empty: '暂无交付单', sub: '订单发货后可在此查看物流' },
   parts: { k: 'empty', t: '配件交付', empty: '暂无配件订单', sub: '配件订单发货后自动同步' },
   profile: { k: 'profile', t: '个人信息', left: true, white: true },
+  privacySettings: { k: 'privacy-settings', t: '隐私设置', left: true, white: true },
   setting: { k: 'setting', t: '设置', left: true, white: true },
   cookies: { k: 'cookies', t: 'Cookie 设置', left: true, white: true },
   cookieNecessary: {
@@ -171,7 +173,7 @@ export const WEEK_INIT: WeekDay[] = [
   { d: '今天', n: 0, today: true },
 ];
 
-export const ROLES = ['设备操作手', '机主', '车队管理员', '服务工程师'];
+export const ROLES = ['设备所有者', '设备管理员', '设备操作手', '三一代理商', '设备维修员', '三一员工'];
 export const LANGS = ['跟随系统', '简体中文', 'English', 'Bahasa Indonesia'];
 
 export const WARNINGS = [

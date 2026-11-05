@@ -15,10 +15,13 @@ import {
   SelfServiceView,
   WarnView,
 } from './views/ServiceViews';
+import { PrivacySettingsView } from './views/PrivacySettingsView';
 import { SettingsView } from './views/SettingsView';
 
 function renderBody(view: SubView): ReactNode {
   switch (view.k) {
+    case 'privacy-settings':
+      return <PrivacySettingsView />;
     case 'setting':
       return <SettingsView />;
     case 'cookies':

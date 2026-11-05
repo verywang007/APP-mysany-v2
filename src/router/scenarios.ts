@@ -75,8 +75,8 @@ export const SCENARIO_GROUPS: ScenarioGroup[] = [
     title: '我的 · 二级页直达',
     desc: '?view= 直接打开某个二级页',
     items: [
+      { title: '隐私设置', to: withQuery(PATHS.mine, { view: 'privacySettings' }) },
       { title: '设置', to: withQuery(PATHS.mine, { view: 'setting' }) },
-      { title: 'Cookie 设置', to: withQuery(PATHS.mine, { view: 'cookies' }) },
       { title: '个人信息', to: withQuery(PATHS.mine, { view: 'profile' }) },
     ],
   },
