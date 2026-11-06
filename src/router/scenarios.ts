@@ -23,6 +23,11 @@ const applyStatuses = CANCEL_STATUSES.filter(s => s !== 'NORMAL');
 
 export const SCENARIO_GROUPS: ScenarioGroup[] = [
   {
+    title: '授权记录弹窗',
+    desc: '首次评论或发布帖子时申请头像展示授权；页面下方可清除授权并重新演示',
+    items: [{ title: '用户头像授权', to: withQuery(PATHS.home, { avatarConsent: '1' }) }],
+  },
+  {
     title: '登录前 · Cookie 设置',
     desc: '登录页在无有效授权时先弹出 Cookie 授权；必须完成授权后才能登录',
     items: [
@@ -75,6 +80,8 @@ export const SCENARIO_GROUPS: ScenarioGroup[] = [
     title: '我的 · 二级页直达',
     desc: '?view= 直接打开某个二级页',
     items: [
+      { title: '隐私政策', to: withQuery(PATHS.mine, { view: 'privacy' }) },
+      { title: '第三方SDK列表', to: withQuery(PATHS.mine, { view: 'sdkList' }) },
       { title: '隐私设置', to: withQuery(PATHS.mine, { view: 'privacySettings' }) },
       { title: '设置', to: withQuery(PATHS.mine, { view: 'setting' }) },
       { title: '个人信息', to: withQuery(PATHS.mine, { view: 'profile' }) },

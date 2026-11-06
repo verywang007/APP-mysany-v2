@@ -1886,3 +1886,13 @@
     transform: none;
   }
 }
+
+.doc-sdk-link {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #1677ff;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}

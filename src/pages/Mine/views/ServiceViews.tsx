@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { ChevronRight } from '@/components/icons';
 import { LegalDocBody } from '@/components/LegalDocBody';
-import { PRIVACY_SETTINGS, SERVICE_TERMS } from '@/data/legal';
+import { PRIVACY_SETTINGS, SERVICE_TERMS, SHARE_LIST_V32 } from '@/data/legal';
 import { ADDRS, FAQS, FLEET, fmtRp, GOODS, POINTS, WARNINGS } from '../data';
 import { Ico } from '../icons';
 import { useMine } from '../MineContext';
@@ -33,12 +33,28 @@ export function HelpView() {
   );
 }
 
-export function DocView({ kind }: { kind: 'privacy' | 'terms' }) {
+export function DocView({ kind }: { kind: 'privacy' | 'terms' | 'sdk-list' }) {
+  const { push } = useMine();
+  const doc = kind === 'sdk-list'
+    ? { ...SHARE_LIST_V32, sections: SHARE_LIST_V32.sections.slice(0, 4) }
+    : kind === 'privacy' ? PRIVACY_SETTINGS : SERVICE_TERMS;
   return (
     <div className="doc">
       <LegalDocBody
-        doc={kind === 'privacy' ? PRIVACY_SETTINGS : SERVICE_TERMS}
-        tail={<p className="tail">（原型演示文本，不构成正式法律文件。）</p>}
+        doc={doc}
+        tail={
+          <>
+            {kind === 'privacy' && (
+              <p>
+                为提供相关功能，我们接入了第三方 SDK。服务用途及涉及的信息详见
+                <button className="doc-sdk-link" onClick={() => push('sdkList')}>
+                  《第三方SDK列表》
+                </button>。
+              </p>
+            )}
+            <p className="tail">（原型演示文本，不构成正式法律文件。）</p>
+          </>
+        }
       />
     </div>
   );

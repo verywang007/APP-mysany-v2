@@ -80,7 +80,7 @@ export const ROUTES: AppRoute[] = [
   },
   {
     path: PATHS.ads,
-    title: '个性化广告授权',
+    title: '个性化推荐授权',
     group: '独立场景',
     entry: '无页面入口：APP 首次启动时的系统授权弹窗',
     themeColor: '#C9CCD4',

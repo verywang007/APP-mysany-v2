@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { DemoBar, DemoButton, DemoSelect, DemoText } from '@/components/DemoBar/DemoBar';
 import { DeviceFrame } from '@/components/DeviceFrame/DeviceFrame';
 import { TickIcon } from '@/components/icons';
-import { LegalDocBody } from '@/components/LegalDocBody';
+import { LegalPage } from '@/components/LegalPage';
 import { StatusBar } from '@/components/StatusBar/StatusBar';
 import { useToast } from '@/components/Toast/useToast';
 import { PRIVACY_V32, SERVICE_TERMS_V32, SHARE_LIST_V32 } from '@/data/legal';
@@ -161,7 +161,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
     if (bothAgreed) return true;
     shake();
     const miss =
-      !agreeService && !agreePrivacy ? '用户服务协议和隐私协议' : !agreeService ? '用户服务协议' : '隐私协议';
+      !agreeService && !agreePrivacy ? '用户服务协议和隐私政策' : !agreeService ? '用户服务协议' : '隐私政策';
     toast('请先阅读并同意' + miss);
     return false;
   };
@@ -303,7 +303,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
               <span className="agree-txt">
                 同意
                 <a href="#" className="doc-link" onClick={e => openDoc(e, 'privacy')}>
-                  隐私协议
+                  隐私政策
                 </a>
               </span>
             </label>
@@ -440,7 +440,7 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
                   <span className="agree-txt">
                     同意
                     <a href="#" className="doc-link" onClick={e => openDoc(e, 'privacy')}>
-                      隐私协议
+                      隐私政策
                     </a>
                   </span>
                 </label>
@@ -470,27 +470,8 @@ function PolicyConsent({ scenario, launchKey, setDeviceVer, setAccountVer }: Pro
         </section>
       )}
 
-      {/* 协议全文（二级抽屉，可关闭） */}
       {docSheet.mounted && (
-        <section
-          className={'sheet sheet-doc' + (docSheet.shown ? ' is-open' : '')}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="doc-head">
-            <button className="doc-back" type="button" onClick={() => setDocKey(null)}>
-              返回
-            </button>
-            <span className="doc-title">{DOCS[lastDoc].title}</span>
-            <span className="doc-spacer" />
-          </div>
-          <div className="doc-body" key={lastDoc}>
-            <LegalDocBody
-              doc={DOCS[lastDoc]}
-              tail={<p style={{ color: '#98989E' }}>（本页为原型示意文本，非正式法律文件。）</p>}
-            />
-          </div>
-        </section>
+        <LegalPage key={lastDoc} kind={lastDoc} doc={DOCS[lastDoc]} onBack={() => setDocKey(null)} />
       )}
 
       {/* 拒绝二次确认 */}

@@ -20,7 +20,6 @@ const ROWS_1 = [
 ];
 
 const ROWS_2 = [
-  { k: 'privacySettings', t: '隐私设置', ico: <Ico.gear />, bg: '#EDF3FF', badge: '' },
   { k: 'mall', t: '积分商城', ico: <Ico.shop />, bg: '#FFE8EA', badge: '全面升级' },
   { k: 'self', t: '自助服务', ico: <Ico.self />, bg: '#E9F1FF' },
   { k: 'fav', t: '收藏中心', ico: <Ico.star />, bg: '#FFE7EB' },

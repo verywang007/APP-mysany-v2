@@ -25,6 +25,7 @@ export interface Settings {
   push: boolean;
   ads: boolean;
   force: boolean;
+  showAvatar: boolean;
   cookies: CookieChoices;
 }
 
@@ -62,6 +63,7 @@ export type ViewKind =
   | 'cookies'
   | 'cookie-detail'
   | 'help'
+  | 'sdk-list'
   | 'privacy'
   | 'terms'
   | 'profile'
@@ -132,7 +134,8 @@ export const SUBS = {
     white: true,
   },
   help: { k: 'help', t: '使用帮助' },
-  privacy: { k: 'privacy', t: '隐私协议' },
+  privacy: { k: 'privacy', t: '隐私政策' },
+  sdkList: { k: 'sdk-list', t: '第三方SDK列表' },
   terms: { k: 'terms', t: '用户服务协议' },
   mall: { k: 'mall', t: '积分商城' },
   self: { k: 'self', t: '自助服务' },

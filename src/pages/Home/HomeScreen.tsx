@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { StatusBar } from '@/components/StatusBar/StatusBar';
 import { useToast } from '@/components/Toast/useToast';
 import { PATHS } from '@/router/paths';
@@ -249,47 +249,67 @@ function AuditList() {
 }
 
 function Community() {
-  const [on, setOn] = useState(1);
-  return (
-    <>
-      <div className="com-tabs">
-        {COMMUNITY_TABS.map((t, i) => (
-          <span key={t} className={'com-tab' + (on === i ? ' on' : '')} onClick={() => setOn(i)}>
-            {t}
-            {t === '我的' && <i className="rd" />}
-          </span>
-        ))}
-      </div>
+  const [scenarioParams] = useSearchParams();
+  const [avatarConsent, setAvatarConsent] = useState<'comment' | 'publish' | null>(() => scenarioParams.get('avatarConsent') === '1' ? (scenarioParams.get('avatarScene') === 'publish' ? 'publish' : 'comment') : null);
+  const completeSend = (kind: 'comment' | 'publish') => {
+    if (scenarioParams.get('avatarConsent') === '1') { toast('已授权，可继续' + (kind === 'comment' ? '发表评论' : '发布帖子')); return; }
+    if (kind === 'comment') {
+      setComments(previous => [...previous, comment]);
+      setComment('');
+    } else {
+      toast('发布成功（本地原型）');
+      setEditing(false);
+    }
+  };
+  const requestSend = (kind: 'comment' | 'publish') => {
+    if (localStorage.getItem('community-avatar-consent-' + kind) !== 'granted') {
+      setAvatarConsent(kind);
+      return;
+    }
+    completeSend(kind);
+  };
 
-      <div className="feed">
-        {[
-          ['a', 59],
-          ['b', 45],
-        ].map(([img, views]) => (
-          <Tap as="article" key={img} className="post" msg="打开经验分享详情">
-            <div className={'p-img ' + img}>
-              <span className="views">
-                <EyeSvg />
-                {views}
-              </span>
-            </div>
-            <div className="p-body">
-              <div className="p-emoji">🙂</div>
-              <div className="p-user">
-                <span className="p-avatar">s</span>
-                <span className="p-name">sany1420821</span>
-              </div>
-              <div className="p-foot">
-                <span>2026-09-16</span>
-                <span className="p-like">
-                  <HeartSvg />5
-                </span>
-              </div>
-            </div>
-          </Tap>
-        ))}
+  const [on, setOn] = useState(0);
+  const [detail, setDetail] = useState<string[] | null>(null);
+  const [sub, setSub] = useState<number | null>(null);
+  const [hot, setHot] = useState(false);
+  const [interactions, setInteractions] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [follow, setFollow] = useState(false);
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState(['Good']);
+
+  const [editing, setEditing] = useState(false);
+  const [topic, setTopic] = useState('');
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const toast = useToast();
+  const posts = on === 0
+    ? [['Ok', 'sany8013766', '2026-10-21', '501', '6'], ['Спросить', 'sany2863328', '2026-10-05', '517', '10']]
+    : on === 1 ? [['SAC2500E', 'Hugobike', '2026-10-25', '6', '1'], ['On the site', 'monika', '2026-10-24', '8', '1']]
+    : on === 3 ? [['STC1000 Load Drop?', 'NursultanKZ', '2026-08-19', '161', '40']]
+    : [['三一纯电重卡真实用车经验分享', '旺是旺旺的旺', '2026-09-09', '99', '14']];
+  return (
+    <section className="community">
+      <div className="com-tabs" role="tablist">
+        {COMMUNITY_TABS.map((t, i) => <button type="button" role="tab" aria-selected={on === i} key={t} className={'com-tab' + (on === i ? ' on' : '')} onClick={() => setOn(i)}>{t}</button>)}
       </div>
-    </>
+      {on === 2 ? <div className="topic-list">{['故障求助', '经验分享'].map((t, i) => <button className="topic-card" key={t} onClick={() => { setSub(i); setOn(i); }}><span className="topic-icon">⚐</span><span><b>{t}</b><small>◎ {i ? '1769' : '8976'}　♙ {i ? '21' : '27'}</small></span><span>›</span></button>)}<p className="community-end">— 已经到底了，看看其他版块的信息吧 —</p></div> : <>
+        {on === 4 && <button className="interaction-card" onClick={() => setInteractions(true)}> <span>☏</span><div>社区互动<small>暂无新的互动，查看历史记录</small></div><span>›</span></button>}
+        <div className="feed">{posts.map(([name, user, date, views, likes], i) => <article className="post" key={name} onClick={() => setDetail([name,user,date,String(views),String(likes)])}>
+          <div className={'p-img ' + (i ? 'b' : 'a')}><span className="views"><EyeSvg />{views}</span></div>
+          <div className="p-body"><div>{name}</div><div className="p-user"><span className="p-avatar">{user[0]}</span><span className="p-name">{user}</span></div><div className="p-foot"><span>{date}</span><span className="p-like"><HeartSvg />{likes}</span></div></div>
+        </article>)}</div>
+        <button className="community-add" aria-label="发布内容" onClick={() => setEditing(true)}>＋</button>
+      </>}
+      {sub !== null && <div className="community-subpage"><div className="sub-head"><button onClick={() => {setSub(null);setOn(2);}}>‹</button><b>{COMMUNITY_TABS[sub]}</b></div><div className="topic-order"><button onClick={() => setHot(false)}>{hot ? '' : '✓'}最新</button><button onClick={() => setHot(true)}>{hot ? '✓' : ''}最热</button></div><div className="feed">{(hot ? [...posts].reverse() : posts).map(p => <article className="post" key={p[0]} onClick={() => setDetail(p)}><div className="p-img a"/><div className="p-body">{p[0]}<p>{p[1]}</p><div className="p-foot">{p[2]}</div></div></article>)}</div><button className="community-add" onClick={() => setEditing(true)}>＋</button></div>}
+      {interactions && <div className="community-subpage"><div className="sub-head"><button onClick={() => setInteractions(false)}>‹</button><b>社区互动</b><button className="read-all" onClick={() => toast('已全部标为已读')}>全部已读</button></div><div className="review-message"><small>09–10 11:21 <span>审核通过</span></small><h3>内容审核</h3><p>你的帖子已通过审核</p><p>来自：system</p></div></div>}
+      {detail && <div className="post-detail"><StatusBar signal="dots" network="5g" battery={29}/><div className="sub-head"><button onClick={() => setDetail(null)}>‹</button><b>{detail[0]}</b></div><div className="detail-scroll"><div className="detail-media"/><h3>{detail[0]}</h3><div className="detail-author"><b>{detail[1]}</b><small>{detail[2]}</small><button onClick={() => setFollow(!follow)}>{follow ? '已关注' : '+ 关注'}</button></div><div className="detail-actions"><span>◎ {detail[3]} 浏览</span><button onClick={() => setLiked(!liked)}>{liked ? '♥' : '♡'} {Number(detail[4])+Number(liked)} 点赞</button><span>{comments.length} 评论</span></div><h4>#{COMMUNITY_TABS[on === 0 ? 0 : 1]}</h4><p>{detail[0] === 'Ok' ? 'Oke' : detail[0]}</p><div className="comment-heading"><b>评论（{comments.length}）</b><select aria-label="评论排序"><option>默认</option><option>最新</option><option>最多点赞</option></select></div>{comments.map((c,i) => <div className="detail-comment" key={i}><b>旺是旺旺的旺</b><p>{c}</p><button onClick={() => setComment('@旺是旺旺的旺 ')}>回复</button><button onClick={e => {e.currentTarget.textContent='♥ 1';}}>♡ 0</button><button onClick={() => setComments(comments.filter((_,n) => n !== i))}>删除</button></div>)}<p className="community-end">没有更多评论了</p></div><form className="comment-form" onSubmit={e => {e.preventDefault();if(comment.trim()){requestSend('comment');}else toast('请输入评论内容');}}><input placeholder="写评论..." value={comment} onChange={e => setComment(e.target.value)}/><button>发送</button></form></div>}
+      {editing && <div className="community-editor"><StatusBar signal="dots" network="5g" battery={29} /><header><button aria-label="返回" onClick={() => setEditing(false)}>‹</button><b>编辑内容</b><button className="publish" onClick={() => { if (!topic || !title.trim() || !body.trim()) { toast('请选择话题并填写标题和内容'); return; } requestSend('publish'); }}>发布</button></header>
+        <div className="editor-content"><div className="media-options"><label>◎<small>图片</small><input type="file" accept="image/*" multiple onChange={e => toast(`已选择 ${Math.min(e.target.files?.length || 0, 5)} 张图片`)} /></label><label>▷<small>视频</small><input type="file" accept="video/*" onChange={() => toast('已选择视频')} /></label></div><p className="media-hint"><em>*</em>图片最多 5 张，视频最多 10 秒</p><h4><em>*</em>选择话题</h4><div className="editor-topics">{['故障求助', '经验分享'].map(t => <button className={topic === t ? 'selected' : ''} key={t} onClick={() => setTopic(t)}>#{t}</button>)}</div><div className="editor-fields"><div><input aria-label="标题" placeholder="标题" maxLength={50} value={title} onChange={e => setTitle(e.target.value)} /><small>{title.length}/50</small></div><textarea aria-label="内容" placeholder="内容：分享你的故事..." maxLength={500} value={body} onChange={e => setBody(e.target.value)} /><small>{body.length}/500</small></div></div>
+      </div>}
+      {avatarConsent && <div className="avatar-consent-mask"><div className="avatar-consent-dialog" role="dialog" aria-modal="true" aria-labelledby="avatar-consent-title" aria-describedby="avatar-consent-description"><div className="avatar-consent-icon" aria-hidden="true">♙</div><h3 id="avatar-consent-title">展示个人头像</h3><p id="avatar-consent-description">在组织管理、圈子等公开场合展示个人头像</p><div className="avatar-consent-actions"><button type="button" onClick={() => setAvatarConsent(null)}>暂不授权</button><button type="button" onClick={() => { const kind = avatarConsent; localStorage.setItem('community-avatar-consent-' + kind, 'granted'); setAvatarConsent(null); completeSend(kind); }}>同意授权</button></div></div></div>}
+    </section>
   );
 }
 
@@ -354,7 +374,7 @@ function TabBar() {
   );
 }
 
-export function HomeScreen() {
+export function HomeScreen({ onLegal: _onLegal }: { onLegal?: (kind: 'privacy' | 'service') => void } = {}) {
   return (
     <div className="home-screen">
       <TopBar />
@@ -392,6 +412,7 @@ export function HomeScreen() {
         <AuditList />
 
         <Community />
+
       </main>
       <TabBar />
     </div>

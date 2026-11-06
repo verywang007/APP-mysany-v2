@@ -1,6 +1,7 @@
+import { LegalPage } from '@/components/LegalPage';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { DemoBar, DemoSelect } from '@/components/DemoBar/DemoBar';
+import { DemoBar, DemoButton, DemoText, DemoSelect } from '@/components/DemoBar/DemoBar';
 import { DeviceFrame } from '@/components/DeviceFrame/DeviceFrame';
 import { useToast } from '@/components/Toast/useToast';
 import { samplePromptRecord, statusLabel } from '@/flows/cancellation';
@@ -34,6 +35,7 @@ function Home() {
   const navigate = useNavigate();
   const record = usePromptRecord();
   const [promptOpen, setPromptOpen] = useState(true);
+  const [legal, setLegal] = useState<'privacy' | 'service' | null>(null);
 
   const close = () => {
     setPromptOpen(false);
@@ -42,7 +44,8 @@ function Home() {
 
   return (
     <>
-      <HomeScreen />
+      <HomeScreen onLegal={setLegal} />
+      {legal && <LegalPage key={legal} kind={legal} onBack={() => setLegal(null)} />}
       {record && promptOpen && (
         <CancelLoginPrompt
           record={record}
@@ -69,13 +72,26 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const preview = String(params.get('cancelState') || '').toUpperCase();
+  const avatarDemo = params.get('avatarConsent') === '1';
+  const avatarScene = params.get('avatarScene') === 'publish' ? 'publish' : 'comment';
+  const [replay, setReplay] = useState(0);
+  const resetAvatar = () => {
+    localStorage.removeItem('community-avatar-consent-comment');
+    localStorage.removeItem('community-avatar-consent-publish');
+    setReplay(k => k + 1);
+  };
   return (
     <DeviceFrame
-      className="pg-home"
+      className={"pg-home" + (avatarDemo ? " pg-avatar-demo" : "")}
       toastDuration={1600}
       demo={
         <DemoBar>
-          <DemoSelect
+          {avatarDemo ? <>
+            <DemoSelect label="场景" value={avatarScene} options={[{ value: 'comment', label: '首次发表评论' }, { value: 'publish', label: '首次发布帖子' }]} onChange={v => { navigate(withQuery(PATHS.home, { avatarConsent: '1', avatarScene: v }), { replace: true }); setReplay(k => k + 1); }} />
+            <DemoText>个人头像展示授权 · 同意后继续发送，拒绝保留草稿</DemoText>
+            <DemoButton onClick={() => setReplay(k => k + 1)}>重放当前场景</DemoButton>
+            <DemoButton onClick={resetAvatar}>清除授权记录</DemoButton>
+          </> : <><DemoSelect
             label="重新登录时的注销状态"
             value={preview}
             options={PREVIEW_OPTIONS}
@@ -83,10 +99,15 @@ export default function HomePage() {
               navigate(withQuery(PATHS.home, { cancelState: v || undefined }), { replace: true })
             }
           />
+          <button type="button" onClick={() => {
+            localStorage.removeItem('community-avatar-consent-comment');
+            localStorage.removeItem('community-avatar-consent-publish');
+            window.alert('头像授权已清除，下次评论或发布时将重新弹出授权。');
+          }}>清除头像授权</button></>}
         </DemoBar>
       }
     >
-      <Home />
+      <Home key={`${avatarScene}-${replay}`} />
     </DeviceFrame>
   );
 }

@@ -32,6 +32,7 @@ function renderBody(view: SubView): ReactNode {
       return <ProfileView />;
     case 'help':
       return <HelpView />;
+    case 'sdk-list':
     case 'privacy':
     case 'terms':
       return <DocView kind={view.k} />;

@@ -7,7 +7,7 @@ const Chev = () => <span className="pf-chev"><ChevronRight /></span>;
 
 export function PrivacySettingsView() {
   const { settings, setSettings, toast, push } = useMine();
-  const setFlag = (k: 'push' | 'force', v: boolean, on: string, off: string) => {
+  const setFlag = (k: 'push' | 'force' | 'showAvatar', v: boolean, on: string, off: string) => {
     setSettings(s => ({ ...s, [k]: v }));
     toast(v ? on : off);
   };
@@ -42,6 +42,17 @@ export function PrivacySettingsView() {
           </p>
         </div>
 
+        <div className="pf-row is-col">
+          <div className="pf-line">
+            <span className="pf-lbl">展示个人头像</span>
+            <Switch
+              on={settings.showAvatar}
+              onChange={v => setFlag('showAvatar', v, '已开启展示个人头像', '已关闭展示个人头像')}
+            />
+          </div>
+          <p className="pf-desc">在组织管理、圈子等公开场合展示个人头像</p>
+        </div>
+
         <div className="pf-row">
           <span className="pf-lbl">强制解除提醒</span>
           <Switch
@@ -51,7 +62,7 @@ export function PrivacySettingsView() {
         </div>
 
         <div className="pf-row" onClick={() => push('privacy')}>
-          <span className="pf-lbl">隐私协议</span>
+          <span className="pf-lbl">隐私政策</span>
           <Chev />
         </div>
 

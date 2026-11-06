@@ -70,7 +70,7 @@ export function Mine() {
   const [profile, setProfile] = useState<Profile>(PROFILE_INIT);
   const [settings, setSettings] = useState<Settings>(() => {
     const cookies = readConsentChoices();
-    return { lang: '跟随系统', push: true, ads: cookies.marketing, force: true, cookies };
+    return { lang: '跟随系统', push: true, ads: cookies.marketing, force: true, showAvatar: false, cookies };
   });
   const [week, setWeek] = useState(WEEK_INIT);
   const [stars, setStars] = useState(0);

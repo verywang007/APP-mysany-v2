@@ -8,9 +8,8 @@ import {
   type KeyboardEvent,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BottomSheet } from '@/components/BottomSheet/BottomSheet';
 import { ChevronRight, TickIcon } from '@/components/icons';
-import { LegalDocBody } from '@/components/LegalDocBody';
+import { LegalPage } from '@/components/LegalPage';
 import { StatusBar } from '@/components/StatusBar/StatusBar';
 import { useToast } from '@/components/Toast/useToast';
 import { COUNTRIES, type Country } from '@/data/countries';
@@ -25,7 +24,7 @@ import { ClearIcon, EyeIcon, FlagIcon, LockIcon, PhoneIcon, ShieldIcon, SocialIc
 /* =========================================================
    登录页
    ---------------------------------------------------------
-   核心规则：用户服务协议 + 隐私协议 两个复选框 **都勾选**
+   核心规则：用户服务协议 + 隐私政策 两个复选框 **都勾选**
             登录按钮才会高亮（品牌红），否则保持未激活的浅红。
    ========================================================= */
 
@@ -137,7 +136,7 @@ export function Login({ locked = false }: LoginProps = {}) {
     if (bothAgreed) return true;
     shake();
     const miss =
-      !agreeService && !agreePrivacy ? '用户服务协议和隐私协议' : !agreeService ? '用户服务协议' : '隐私协议';
+      !agreeService && !agreePrivacy ? '用户服务协议和隐私政策' : !agreeService ? '用户服务协议' : '隐私政策';
     toast(msg ?? '请先阅读并同意' + miss);
     return false;
   };
@@ -467,7 +466,7 @@ export function Login({ locked = false }: LoginProps = {}) {
                   lockToast();
                   return;
                 }
-                if (requireAgreed('请先阅读并同意用户服务协议和隐私协议')) {
+                if (requireAgreed('请先阅读并同意用户服务协议和隐私政策')) {
                   toast('正在唤起 ' + name + ' 授权…');
                 }
               }}
@@ -509,25 +508,9 @@ export function Login({ locked = false }: LoginProps = {}) {
         }}
       />
 
-      <BottomSheet
-        open={sheet === 'doc'}
-        onClose={() => setSheet(null)}
-        title={doc.title}
-        cancelText="关闭"
-        className="sheet-doc"
-      >
-        <div className="doc-body" key={docKey}>
-          <LegalDocBody
-            doc={doc}
-            tail={<p style={{ marginTop: 14, color: '#9A9AA0' }}>（原型演示文本，不构成正式法律文件。）</p>}
-          />
-        </div>
-        <div className="doc-foot">
-          <button className="btn-login" type="button" onClick={agreeDoc}>
-            <span className="btn-label">同意并继续</span>
-          </button>
-        </div>
-      </BottomSheet>
+      {sheet === 'doc' && (
+        <LegalPage key={docKey} kind={docKey} doc={doc} onBack={() => setSheet(null)} onAgree={agreeDoc} />
+      )}
     </>
   );
 }
