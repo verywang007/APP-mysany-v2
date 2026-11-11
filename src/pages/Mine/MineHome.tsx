@@ -44,7 +44,7 @@ export function MineHome({ stars, week, claimed, onClaim }: MineHomeProps) {
       {/* 顶部账号栏（吸顶） */}
       <div className={'mine-hd' + (stuck ? ' is-stuck' : '')}>
         <div className="hd-avatar" onClick={() => push('profile')}>
-          <Avatar size={40} set={profile.avatar} name={acc.name} role={profile.role} />
+          <Avatar size={40} set={profile.avatar} name={acc.name} />
           <span className="hd-badge">!</span>
         </div>
         <div className="hd-main">

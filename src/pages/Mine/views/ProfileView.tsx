@@ -37,7 +37,7 @@ export function ProfileView() {
           <span className="pf-lbl">{r.l}</span>
           {r.avatar ? (
             <span className="pf-av">
-              <Avatar size={28} set={profile.avatar} name={acc.name} role={profile.role} />
+              <Avatar size={28} set={profile.avatar} name={acc.name} />
             </span>
           ) : (
             <span className="pf-val">{r.v}</span>

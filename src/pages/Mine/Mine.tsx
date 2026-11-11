@@ -237,18 +237,18 @@ export function Mine() {
                   onClick={() => {
                     closeSheet();
                     setDialog({
-                      t: '使用默认头像？',
+                      t: '删除头像？',
                       m: '确认后将恢复系统默认头像。',
                       cancel: '取消',
-                      ok: '确认',
+                      ok: '删除',
                       onOk: () => {
                         setProfile(p => ({ ...p, avatar: false }));
-                        toast('已使用默认头像');
+                        toast('头像已删除');
                       },
                     });
                   }}
                 >
-                  使用默认头像
+                  删除头像
                 </button>
               )}
             </div>

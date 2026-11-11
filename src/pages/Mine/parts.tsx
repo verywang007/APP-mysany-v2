@@ -5,39 +5,22 @@ import { Ico } from './icons';
 
 /* 「我的」页内部复用的小组件 */
 
-const ROLE_AVATARS: Record<string, { background: string; color: string; badge: ReactNode }> = {
-  设备所有者: { background: '#FFF0D5', color: '#AD741D', badge: <path d="m40 42 3 4 5-7 5 7 3-4-2 11H42z" /> },
-  设备管理员: { background: '#E3EDFF', color: '#3D67B2', badge: <><rect x="40" y="40" width="16" height="15" rx="3" /><path d="M44 44h8m-8 4h8m-8 4h5" stroke="white" strokeWidth="1.5" /></> },
-  设备操作手: { background: '#FFF0E1', color: '#D57B27', badge: <><circle cx="48" cy="48" r="8" /><path d="M42 47h12m-6 0v8m-5-13 5 5 5-5" stroke="white" strokeWidth="1.5" fill="none" /></> },
-  三一代理商: { background: '#EEE7FA', color: '#8055AE', badge: <><rect x="39" y="43" width="18" height="12" rx="2" /><path d="M44 43v-4h8v4m-13 5h18" fill="none" stroke="white" strokeWidth="1.5" /></> },
-  设备维修员: { background: '#DDF3F0', color: '#288D80', badge: <path d="M51 39a6 6 0 0 0-7 8l-6 6 4 4 6-6a6 6 0 0 0 8-7l-4 4-4-4z" /> },
-  三一员工: { background: '#FCE5E8', color: '#C34B60', badge: <><rect x="41" y="39" width="15" height="18" rx="3" /><circle cx="48.5" cy="45" r="2" fill="white" /><path d="M45 52h7m-3.5-15v5" stroke="white" strokeWidth="1.5" /></> },
-};
-
-/** 默认头像按身份展示角色插画，自定义头像沿用昵称预览。 */
-export const Avatar = ({ size, set, name, role }: { size: number; set: boolean; name: string; role: string }) => {
-  const avatar = ROLE_AVATARS[role] ?? ROLE_AVATARS['设备操作手'];
-  return (
+export const Avatar = ({ size, set, name }: { size: number; set: boolean; name: string }) => (
   <span
     className={'av' + (set ? ' is-set' : '')}
     style={{ width: size, height: size, fontSize: Math.round(size * 0.42) }}
     role="img"
-    aria-label={set ? `${name}的头像` : `${role}默认头像`}
+    aria-label={set ? `${name}的头像` : '默认头像'}
   >
     {set ? (name || '旺').slice(0, 1) : (
       <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
-        <circle cx="32" cy="32" r="32" fill={avatar.background} />
-        <path d="M12 64V53c0-11 9-18 20-18s20 7 20 18v11" fill={avatar.color} />
-        <circle cx="32" cy="25" r="12" fill="#F4CFAD" />
-        <path d="M20 25v-5c0-8 5-12 12-12s12 4 12 12v5l-5-8c-5 4-10 5-19 5" fill={avatar.color} />
-        <path d="m26 39 6 8 6-8" fill="white" opacity=".9" />
-        <circle cx="48" cy="48" r="12" fill={avatar.background} />
-        <g fill={avatar.color}>{avatar.badge}</g>
+        <circle cx="32" cy="32" r="32" fill="#EEF0F3" />
+        <circle cx="32" cy="24" r="11" fill="#A3A9B4" />
+        <path d="M12 60v-4a20 20 0 0 1 40 0v4" fill="#A3A9B4" />
       </svg>
     )}
   </span>
 );
-};
 
 /** 签到星星（圆底 + 白星） */
 export const DayStar = ({ on }: { on?: boolean }) => (
