@@ -252,10 +252,11 @@ function Community() {
   const [scenarioParams] = useSearchParams();
   const [avatarConsent, setAvatarConsent] = useState<'comment' | 'publish' | null>(() => scenarioParams.get('avatarConsent') === '1' ? (scenarioParams.get('avatarScene') === 'publish' ? 'publish' : 'comment') : null);
   const completeSend = (kind: 'comment' | 'publish') => {
-    if (scenarioParams.get('avatarConsent') === '1') { toast('已授权，可继续' + (kind === 'comment' ? '发表评论' : '发布帖子')); return; }
+    if (scenarioParams.get('avatarConsent') === '1') { toast(kind === 'comment' ? '评论发送成功（本地原型）' : '发布成功（本地原型）'); return; }
     if (kind === 'comment') {
       setComments(previous => [...previous, comment]);
       setComment('');
+      toast('评论发送成功（本地原型）');
     } else {
       toast('发布成功（本地原型）');
       setEditing(false);
@@ -308,7 +309,7 @@ function Community() {
       {editing && <div className="community-editor"><StatusBar signal="dots" network="5g" battery={29} /><header><button aria-label="返回" onClick={() => setEditing(false)}>‹</button><b>编辑内容</b><button className="publish" onClick={() => { if (!topic || !title.trim() || !body.trim()) { toast('请选择话题并填写标题和内容'); return; } requestSend('publish'); }}>发布</button></header>
         <div className="editor-content"><div className="media-options"><label>◎<small>图片</small><input type="file" accept="image/*" multiple onChange={e => toast(`已选择 ${Math.min(e.target.files?.length || 0, 5)} 张图片`)} /></label><label>▷<small>视频</small><input type="file" accept="video/*" onChange={() => toast('已选择视频')} /></label></div><p className="media-hint"><em>*</em>图片最多 5 张，视频最多 10 秒</p><h4><em>*</em>选择话题</h4><div className="editor-topics">{['故障求助', '经验分享'].map(t => <button className={topic === t ? 'selected' : ''} key={t} onClick={() => setTopic(t)}>#{t}</button>)}</div><div className="editor-fields"><div><input aria-label="标题" placeholder="标题" maxLength={50} value={title} onChange={e => setTitle(e.target.value)} /><small>{title.length}/50</small></div><textarea aria-label="内容" placeholder="内容：分享你的故事..." maxLength={500} value={body} onChange={e => setBody(e.target.value)} /><small>{body.length}/500</small></div></div>
       </div>}
-      {avatarConsent && <div className="avatar-consent-mask"><div className="avatar-consent-dialog" role="dialog" aria-modal="true" aria-labelledby="avatar-consent-title" aria-describedby="avatar-consent-description"><div className="avatar-consent-icon" aria-hidden="true">♙</div><h3 id="avatar-consent-title">展示个人头像</h3><p id="avatar-consent-description">在组织管理、圈子等公开场合展示个人头像</p><div className="avatar-consent-actions"><button type="button" onClick={() => setAvatarConsent(null)}>暂不授权</button><button type="button" onClick={() => { const kind = avatarConsent; localStorage.setItem('community-avatar-consent-' + kind, 'granted'); setAvatarConsent(null); completeSend(kind); }}>同意授权</button></div></div></div>}
+      {avatarConsent && <div className="avatar-consent-mask"><div className="avatar-consent-dialog" role="dialog" aria-modal="true" aria-labelledby="avatar-consent-title" aria-describedby="avatar-consent-description"><div className="avatar-consent-icon" aria-hidden="true">♙</div><h3 id="avatar-consent-title">展示个人头像</h3><p id="avatar-consent-description">在组织管理、圈子等公开场合展示个人头像，暂不授权将展示系统默认头像。</p><div className="avatar-consent-actions"><button type="button" onClick={() => { const kind = avatarConsent; setAvatarConsent(null); completeSend(kind); }}>暂不授权</button><button type="button" onClick={() => { const kind = avatarConsent; localStorage.setItem('community-avatar-consent-' + kind, 'granted'); setAvatarConsent(null); completeSend(kind); }}>同意授权</button></div></div></div>}
     </section>
   );
 }

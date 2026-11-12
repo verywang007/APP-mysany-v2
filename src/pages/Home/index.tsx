@@ -88,7 +88,7 @@ export default function HomePage() {
         <DemoBar>
           {avatarDemo ? <>
             <DemoSelect label="场景" value={avatarScene} options={[{ value: 'comment', label: '首次发表评论' }, { value: 'publish', label: '首次发布帖子' }]} onChange={v => { navigate(withQuery(PATHS.home, { avatarConsent: '1', avatarScene: v }), { replace: true }); setReplay(k => k + 1); }} />
-            <DemoText>个人头像展示授权 · 同意后继续发送，拒绝保留草稿</DemoText>
+            <DemoText>个人头像展示授权 · 同意或暂不授权均继续发送，暂不授权展示系统默认头像</DemoText>
             <DemoButton onClick={() => setReplay(k => k + 1)}>重放当前场景</DemoButton>
             <DemoButton onClick={resetAvatar}>清除授权记录</DemoButton>
           </> : <><DemoSelect
