@@ -1,0 +1,68 @@
+.pg-device-warnings {
+  .device { background: var(--white, #fff); }
+  button { cursor:pointer; font:inherit; border:0; background:transparent; color:inherit; }
+  .warning-header { display:flex; align-items:center; padding:8px 18px 16px; gap:16px; }
+  .warning-header h1 { flex:1; font-size:18px; margin:0; }
+  .warning-header button { font-size:28px; padding:0; }
+  .warning-search { display:flex; align-items:center; gap:8px; background:#f4f4f8; border-radius:28px; margin:8px 14px 12px; padding:10px; color:#a0a3ad; }
+  .warning-search input { flex:1; min-width:0; font:inherit; font-size:14px; border:0; outline:0; background:transparent; }
+  .warning-filters { display:flex; gap:14px; margin:4px 18px 14px; }
+  .warning-filters button { border:1px solid #eee; border-radius:22px; padding:6px 10px; color:#777; font-size:12px; }
+  .warning-scroll { flex:1; min-height:0; overflow:auto; padding:0 16px 20px; }
+  .warning-event { border:1px solid #eee; border-radius:12px; padding:16px; margin-bottom:16px; }
+  .warning-event h2 { margin:0 0 12px; padding-bottom:12px; border-bottom:1px solid #eee; font-size:16px; }
+  .warning-event > span { display:inline-block; padding:4px 6px; border-radius:3px; color:#d6a05a; background:#fcf5e9; font-size:12px; }
+  .warning-event p { margin:10px 0 4px; font-size:14px; }
+  .warning-event small { color:#888; font-size:12px; }
+  .warning-config section { margin:14px 0 20px; }
+  .warning-setting-row { display:flex; justify-content:space-between; align-items:center; border-radius:8px; background:#f4f4f8; padding:12px 16px; font-size:14px; }
+  .warning-config p { margin:5px 16px; font-size:12px; color:#888; line-height:1.5; }
+  .warning-switch { width:48px; height:29px; border-radius:20px; background:#ccc; padding:2px; }
+  .warning-switch i { display:block; width:25px; height:25px; border-radius:50%; background:white; }
+  .warning-switch.on { background:#bd241c; }
+  .warning-switch.on i { margin-left:auto; }
+  .warning-parameter-link { margin:6px 16px 0; color:#5684b9; font-size:12px; padding:0; }
+  .warning-device { display:flex; align-items:center; gap:8px; padding:20px 0; border-bottom:1px solid #eee; }
+  .warning-device > div { flex:1; min-width:0; }
+  .warning-device b { font-size:14px; }
+  .warning-device small { display:block; color:#999; font-size:12px; margin-top:6px; }
+  .warning-device em { color:#bd241c; font-style:normal; }
+  input[type=checkbox] { width:20px; height:20px; accent-color:#252831; }
+  .warning-thumb { width:40px; height:40px; display:grid; place-items:center; background:#f3f4f7; color:#c63232; font-weight:800; font-size:10px; }
+  .warning-footer { display:flex; align-items:center; justify-content:space-between; padding:14px 16px 26px; }
+  .warning-footer label { display:flex; align-items:center; gap:6px; font-size:14px; }
+  .warning-footer button,.warning-actions button:last-child { background:#bd241c; color:white; border-radius:8px; padding:12px 16px; }
+  .warning-footer button:disabled { opacity:.45; }
+  .warning-option { width:100%; display:flex; justify-content:space-between; padding:16px 0; border-bottom:1px solid #eee; text-align:left; }
+  .warning-empty { text-align:center; padding:160px 0 40px; color:#aaa; }
+  .warning-empty svg { width:130px; }
+  .warning-actions { display:flex; gap:10px; margin:24px 0 8px; }
+  .warning-actions button { flex:1; border:1px solid #ddd; border-radius:8px; padding:12px; }
+  .warning-dates { display:flex; gap:10px; }
+  .warning-dates label { flex:1; font-size:14px; text-align:center; background:#f4f4f8; border-radius:8px; padding:10px; }
+  .warning-dates input { display:block; width:100%; margin-top:10px; border:0; background:transparent; }
+  .warning-value { display:block; width:100%; padding:30px; border:0; background:white; font-size:20px; text-align:center; }
+}
+.pg-device-warnings .warning-notifications { display:flex; align-items:center; justify-content:space-between; width:100%; padding:16px; margin:14px 0 20px; background:#f4f4f8; border-radius:8px; text-align:left; }
+.pg-device-warnings .warning-notifications b { font-size:14px; font-weight:400; }
+.pg-device-warnings .warning-notifications small { display:block; margin-top:8px; color:#888; font-size:12px; }
+.pg-device-warnings .warning-notifications > span:last-child:not(:first-child) { color:#aaa; font-size:24px; }
+.pg-device-warnings .notification-preview label { display:flex; align-items:center; justify-content:space-between; padding:16px 0; }
+.pg-device-warnings .notification-demo-note { color:#999; font-size:12px; }
+
+.pg-device-warnings .warning-notifications > span:first-child { display:flex; align-items:center; flex:1; min-width:0; gap:12px; }
+.pg-device-warnings .warning-notifications b { flex:none; }
+.pg-device-warnings .warning-notifications small { margin-top:0; line-height:1.5; }
+
+.pg-device-warnings .warning-notifications > span:first-child { justify-content:space-between; }
+.pg-device-warnings .warning-notifications small { margin-left:auto; text-align:right; }
+.pg-device-warnings .warning-notifications > span:last-child:not(:first-child) { margin-left:8px; }
+.pg-device-warnings .warning-risk-row { display:flex; align-items:center; justify-content:space-between; width:100%; padding:16px; margin:0 0 20px; background:#f4f4f8; border-radius:8px; font-size:14px; text-align:left; }
+.pg-device-warnings .warning-risk-selected { display:flex; align-items:center; gap:7px; }
+.pg-device-warnings .warning-risk-selected > span:last-child { color:#aaa; font-size:24px; margin-left:3px; }
+.pg-device-warnings .risk-badge { display:inline-flex; flex:none; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; font-size:11px; line-height:1; color:white; }
+.pg-device-warnings .risk-0 { background:#d93032; }
+.pg-device-warnings .risk-1 { background:#ef8c24; }
+.pg-device-warnings .risk-2 { background:#f7c487; color:#925015; }
+.pg-device-warnings .warning-risk-option { display:flex; align-items:center; gap:12px; padding:18px 0; border-bottom:1px solid #eee; font-size:15px; }
+.pg-device-warnings .warning-risk-option input { margin-left:auto; }

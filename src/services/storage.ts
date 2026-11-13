@@ -6,6 +6,10 @@
    ========================================================= */
 
 export const STORAGE_KEYS = {
+  warningRiskLevels: 'mysany.warningRiskLevels.v1',
+  notificationPermission: 'mysany.notificationPermission.v1',
+  warningSettings: 'mysany.warningSettings.v1',
+  warningParameters: 'mysany.warningParameters.v1',
   /** Cookie 授权记录（Cookie 授权页、我的 - Cookie 设置共用） */
   cookieConsent: 'mysany.cookieConsent.v1',
   /** 注销申请记录（注销申请页、首页重新登录提示、设置页状态摘要共用） */

@@ -22,6 +22,7 @@ export interface ScenarioGroup {
 const applyStatuses = CANCEL_STATUSES.filter(s => s !== 'NORMAL');
 
 export const SCENARIO_GROUPS: ScenarioGroup[] = [
+ { title: '审核页面', desc: '镜像已核实的页面', items: [{title:'审核设置',to:withQuery(PATHS.audit,{page:'settings'})},{title:'设备事件列表',to:withQuery(PATHS.audit,{page:'events',code:'SY0245CA53708'})}] },
   {
     title: '授权记录弹窗',
     desc: '首次评论或发布帖子时申请头像展示授权；页面下方可清除授权并重新演示',

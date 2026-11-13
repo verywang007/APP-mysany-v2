@@ -1,3 +1,5 @@
+import AuditPage from '@/pages/Audit';
+import DeviceWarningsPage from '@/pages/DeviceWarnings';
 import type { ReactElement } from 'react';
 import AccountCancellationPage from '@/pages/AccountCancellation';
 import AdsPage from '@/pages/Ads';
@@ -16,7 +18,7 @@ import { PATHS } from './paths';
    group / entry 会显示在场景目录里，说明页面在真实 APP 中的位置。
    ========================================================= */
 
-export type RouteGroup = '主流程' | '账号与隐私' | '独立场景';
+export type RouteGroup = '主流程' | '账号与隐私' | '独立场景' | '设备预警';
 
 export interface AppRoute {
   path: string;
@@ -30,6 +32,8 @@ export interface AppRoute {
 }
 
 export const ROUTES: AppRoute[] = [
+  { path: PATHS.audit, title: '审核', group: '主流程', entry: '底部 Tab 审核', themeColor: '#ffffff', element: <AuditPage /> },
+  { path: PATHS.deviceWarnings, title: '设备预警', group: '设备预警', entry: '我 → 设备预警；设备搜索、日期和类型筛选', themeColor: '#ffffff', element: <DeviceWarningsPage /> },
   {
     path: PATHS.login,
     title: '登录',

@@ -339,7 +339,7 @@ function TabBar() {
         </svg>
         设备
       </div>
-      <div className="tab" onClick={() => toast('审核（原型暂未实现）')}>
+      <div className="tab" onClick={() => navigate(PATHS.audit)}>
         <svg
           viewBox="0 0 24 24"
           fill="none"

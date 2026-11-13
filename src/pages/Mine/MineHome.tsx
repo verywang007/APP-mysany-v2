@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '@/router/paths';
 import { useState } from 'react';
 import { ChevronRight } from '@/components/icons';
 import { fmtRp, type WeekDay } from './data';
@@ -35,6 +37,7 @@ interface MineHomeProps {
 }
 
 export function MineHome({ stars, week, claimed, onClaim }: MineHomeProps) {
+  const navigate = useNavigate();
   const { acc, profile, toast, push, openSheet } = useMine();
   const [stuck, setStuck] = useState(false);
   const claimable = week.reduce((s, d) => s + (d.on && !claimed ? d.n : 0), 0);
@@ -116,7 +119,7 @@ export function MineHome({ stars, week, claimed, onClaim }: MineHomeProps) {
         {/* 三宫格 */}
         <div className="card quick">
           {QUICK.map(q => (
-            <button className="qk" key={q.k} onClick={() => push(q.k)}>
+            <button className="qk" key={q.k} onClick={() => q.k === 'warn' ? navigate(PATHS.deviceWarnings) : push(q.k)}>
               <span className="qk-ico" style={{ background: q.bg }}>
                 {q.ico}
               </span>

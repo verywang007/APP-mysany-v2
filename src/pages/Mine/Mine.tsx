@@ -170,9 +170,6 @@ export function Mine() {
         {tab === 'device' && (
           <PlainPage title="设备" txt="还没有绑定任何设备" sub="回到「我的」页点击绑定设备" />
         )}
-        {tab === 'audit' && (
-          <PlainPage title="审核" txt="暂无待审核事项" sub="成员申请、用车审批会在此汇总" />
-        )}
 
         {/* 右侧悬浮球 */}
         {tab === 'me' && (
@@ -194,6 +191,7 @@ export function Mine() {
             className={'tabitem' + (tab === t.k ? ' is-active' : '')}
             onClick={() => {
               if (t.k === 'home') return navigate(PATHS.home);
+              if (t.k === 'audit') return navigate(PATHS.audit);
               setStack([]);
               setTab(t.k);
             }}
